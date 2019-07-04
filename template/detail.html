@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ユーザー詳細</title>
+  </head>
+  <body>
+    
+  {{if .message}}
+    {{.message}}
+  {{end}}
+
+  <div>
+    <p>ユーザー詳細</p>
+    <form method="post" action="/update/{{.id}}">
+        名前:<input type="text" name="name" size="30" value="{{.user.Name}}"><br>
+        パスワード:<input type="password" name="password" size="30"><br>
+        メールアドレス:<input type="text" name="email" size="100" value="{{.user.Email}}"><br>
+        <input type="submit" value="更新">
+    </form>
+    <form method="get" action="/">
+        <input type="submit" value="戻る">
+    </form>
+  </div>
+
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ユーザー詳細</title>
+  </head>
+  <body>
+    
+  {{if .message}}
+    {{.message}}
+  {{end}}
+
+  <div>
+    <p>ユーザー削除</p>
+    <p>以下のユーザーを削除しますか？</p>
+    <form method="post" action="/delete/{{.id}}">
+        <table border="1">
+            <tr>
+                <th>名前</th>
+                <th>メールアドレス</th>
+            </tr>
+            <tr>
+                <td>{{ .user.Name }}</td>
+                <td>{{ .user.Email }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="削除">
+    </form>
+    <form method="get" action="/">
+        <input type="submit" value="戻る">
+    </form>
+  </div>
+
+  </body>
+</html>

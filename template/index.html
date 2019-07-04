@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ユーザー一覧</title>
+  </head>
+  <body>
+
+  {{if .message}}
+    {{.message}}
+  {{end}}
+
+  {{if .users}}
+  <div>
+    <p>ユーザー一覧</p>
+    <table border="1">
+      <tr>
+        <th>名前</th>
+        <th>メールアドレス</th>
+        <th>操作</th>
+      </tr>
+      {{ range .users }}
+        <tr>
+          <td>{{ .Name }}</td>
+          <td>{{ .Email }}</td>
+          <td>
+          <li>
+              <label><a href="/detail/{{.ID}}">編集</a></label>
+              <label><a href="/delete/{{.ID}}">削除</a></label>
+          </li>
+          </td>
+        </tr>
+      {{end}}
+    </table>
+  </div>
+  {{end}}
+
+  <br>
+  
+  <div>
+    <p>ユーザー新規作成</p>
+    <form method="post" action="/new">
+      名前:<input type="text" name="name" size="30" ><br>
+      パスワード:<input type="password" name="password" size="30" ><br>
+      メールアドレス:<input type="text" name="email" size="100" ><br>
+      <input type="submit" value="作成">
+    </form>
+  </div>
+
+  </body>
+</html>
