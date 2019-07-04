@@ -17,6 +17,7 @@ func main() {
 	router.GET("/", func(ctx *gin.Context) {
 		users := model.GetAllUsers()
 		ctx.HTML(200, "index.html", gin.H{
+			"title": "まさーしの練習アプリ",
 			"users": users,
 		})
 	})
