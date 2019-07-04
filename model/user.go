@@ -1,7 +1,10 @@
 package model
 
 import (
+	"strconv"
+
 	"github.com/jinzhu/gorm"
+	"github.com/masashi1014/go_sample/config"
 )
 
 type User struct {
@@ -13,25 +16,28 @@ type User struct {
 
 //データベース接続
 func dbInit() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test")
-	defer db.Close()
+	//conf.tomlからDBの接続情報を取得
+	conf, err := config.NewConfig()
 	if err != nil {
 		panic(err.Error())
 	}
-	
+
+	//DB接続
+	db, err := gorm.Open("mysql", conf.DB.User+":"+conf.DB.Password+"@tcp("+conf.DB.Host+":"+strconv.Itoa(conf.DB.Port)+")/"+conf.DB.Db+"?parseTime=true")
+	if err != nil {
+		panic(err.Error())
+	}
+
 	// マイグレーション(テーブルがなかったら自動生成)
-    db.AutoMigrate(&User{})
+	db.AutoMigrate(&User{})
 	return db
 }
 
 //ユーザー全権取得
 func GetAllUsers() []User {
-	dbInit()
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test?parseTime=true")
+	db := dbInit()
 	defer db.Close()
-	if err != nil {
-		panic("DB open failed")
-	}
+
 	user := []User{}
 	db.Find(&user)
 
@@ -40,12 +46,9 @@ func GetAllUsers() []User {
 
 //ユーザー1件取得
 func GetUserDetail(id int) User {
-	dbInit()
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test?parseTime=true")
+	db := dbInit()
 	defer db.Close()
-	if err != nil {
-		panic("DB open failed")
-	}
+
 	user := User{}
 	db.First(&user, id)
 
@@ -54,12 +57,9 @@ func GetUserDetail(id int) User {
 
 //ユーザー新規作成
 func CreateUser(user User) {
-	dbInit()
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test?parseTime=true")
+	db := dbInit()
 	defer db.Close()
-	if err != nil {
-		panic("DB open failed")
-	}
+
 	rec := User{
 		Name:     user.Name,
 		Password: user.Password,
@@ -72,12 +72,8 @@ func CreateUser(user User) {
 
 //ユーザー更新
 func UpdateUser(id int, update_user User) {
-	dbInit()
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test?parseTime=true")
+	db := dbInit()
 	defer db.Close()
-	if err != nil {
-		panic("DB open failed")
-	}
 
 	user := User{}
 	db.First(&user, id)
@@ -90,12 +86,8 @@ func UpdateUser(id int, update_user User) {
 
 //ユーザー削除
 func DeleteUser(id int) {
-	dbInit()
-	db, err := gorm.Open("mysql", "root:root@tcp(localhost:8889)/go_test?parseTime=true")
+	db := dbInit()
 	defer db.Close()
-	if err != nil {
-		panic("DB open failed")
-	}
 
 	user := User{}
 	db.First(&user, id)
