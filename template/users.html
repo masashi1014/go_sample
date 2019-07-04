@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ユーザー一覧</title>
+  </head>
+  <body>
+    {{ range .users }}
+        <li>名前：{{ .Name }}、メールアドレス：{{ .Email }}
+            <label><a href="/detail/{{.ID}}">編集</a></label>
+            <label><a href="/delete_check/{{.ID}}">削除</a></label>
+        </li>
+    {{end}}
+  </body>
+</html>
