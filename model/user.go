@@ -38,10 +38,10 @@ func GetAllUsers() []User {
 	db := dbInit()
 	defer db.Close()
 
-	user := []User{}
-	db.Find(&user)
+	users := []User{}
+	db.Find(&users)
 
-	return user
+	return users
 }
 
 //ユーザー1件取得
