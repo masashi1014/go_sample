@@ -4,7 +4,8 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-const ConfPath = "/Users/masashi/go/src/github.com/masashi1014/go_sample/config/env/conf.toml"
+//const ConfPath = "/Users/masashi/go/src/github.com/masashi1014/go_sample/config/env/conf.toml"
+const ConfPath = "/go/src/github.com/masashi1014/go_sample/config/env/conf.toml"
 
 type DBConfig struct {
 	User     string `toml:"user"`

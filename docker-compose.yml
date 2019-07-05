@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    links:
+      - db:mysql
+    volumes:
+      - .:/go/src/github.com/masashi1014/go_sample
+    command: realize start --run --no-config
+  db:
+    image: mysql:5.6
+    volumes:
+      - /Applications/MAMP/db/mysql56:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
