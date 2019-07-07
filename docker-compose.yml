@@ -12,10 +12,12 @@ services:
       - .:/go/src/github.com/masashi1014/go_sample
     command: realize start --run --no-config
   db:
-    image: mysql:5.6
+    image: "gcr.io/cloudsql-docker/gce-proxy:1.09"
+    command:
+      ["/cloud_sql_proxy",
+      "-instances=mimetic-sweep-245604:asia-east1:cloudsqltest=tcp:0.0.0.0:3306",
+      "-credential_file=/config/mimetic-sweep-245604-80ccded9d776.json"]
     volumes:
-      - /Applications/MAMP/db/mysql56:/var/lib/mysql
+      - "./config/env/mimetic-sweep-245604-80ccded9d776.json:/config/mimetic-sweep-245604-80ccded9d776.json"
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
